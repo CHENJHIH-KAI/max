@@ -9,11 +9,12 @@ if (!isset($_COOKIE['session_id']))
 
 // Try to find a match in the database
 $guid = $_COOKIE['session_id'];
-$con = mysql_connect($db_host, $db_user, $db_pass);
-mysql_select_db($db_name, $con);
+// $con = mysql_connect($db_host, $db_user, $db_pass);
+// mysql_select_db($db_name, $con);
+$con = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
 
 $query = "SELECT userid FROM susers WHERE guid = '$guid'";
-$result = mysql_query($query, $con);
+$result = mysql_query($con, $query);
 
 if (!mysql_num_rows($result))
 {

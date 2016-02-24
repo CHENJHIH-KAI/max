@@ -13,13 +13,12 @@ if ($email == '' || $password == '')
 else
 {
     // Authenticate user
-    $con = mysql_connect($db_host, $db_user, $db_pass);
-    mysql_select_db($db_name, $con);
+    $con = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
     
     $query = "SELECT userid, MD5(UNIX_TIMESTAMP() + userid + RAND(UNIX_TIMESTAMP()))
         guid FROM susers WHERE email = '$email' AND password = password('$password')";
         
-    $result = mysql_query($query, $con)
+    $result = mysql_query($con ,$query)
     	or die ('Error in query');
     
     if (mysql_num_rows($result))
@@ -28,7 +27,7 @@ else
         // Update the user record
         $query = "UPDATE susers SET guid = '$row[1]' WHERE userid = $row[0]";
             
-        mysql_query($query, $con)
+        mysql_query($con, $query)
         	or die('Error in query');
         
         // Set the cookie and redirect
